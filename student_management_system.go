@@ -92,7 +92,7 @@ func updateStudent() {
 				fmt.Scanln(&newEditValue)
 				student_database[index].gender = newEditValue
 			case "Subjects":
-				assignSubject()
+				fmt.Println("Enter new subject")
 			}
 		} else {
 			fmt.Println("Student doesnt exist")
