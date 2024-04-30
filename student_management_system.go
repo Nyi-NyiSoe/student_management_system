@@ -33,22 +33,75 @@ func menu() {
 		fmt.Scanln(&choice)
 		switch choice {
 		case 0:
-			fmt.Println("Existing program")
+			fmt.Println("Exiting program")
 			return
 		case 1:
 			addStudent()
+		case 3:
+			updateStudent()
 		case 4:
 			viewStudent()
 		case 5:
 			assignSubject()
 		default:
-			fmt.Println("Existing program")
+			fmt.Println("Exiting program")
 			return
 
 		}
 
 	}
 }
+
+func updateStudent() {
+	var Id int
+	var newEditValue string
+	for {
+		fmt.Println("Enter the ID of student")
+		_, err := fmt.Scanln(&Id)
+		if err != nil {
+			fmt.Println("Invalid input")
+			continue
+		}
+		break
+	}
+	for index, value := range student_database {
+		oldId, err := strconv.Atoi(value.Id)
+		if err != nil {
+
+			return
+		}
+		if oldId == Id {
+			fmt.Println("Which field do you want do edit?")
+			var choice string
+			fmt.Scanln(&choice)
+			switch choice {
+			case "id":
+				fmt.Println("Enter new Id")
+				fmt.Scanln(&newEditValue)
+				student_database[index].Id = newEditValue
+			case "name":
+				fmt.Println("Enter new name")
+				fmt.Scanln(&newEditValue)
+				student_database[index].name = newEditValue
+			case "age":
+				fmt.Println("Enter new age")
+				fmt.Scanln(&newEditValue)
+				student_database[index].age = newEditValue
+			case "gender":
+				fmt.Println("Enter new gender")
+				fmt.Scanln(&newEditValue)
+				student_database[index].gender = newEditValue
+			case "Subjects":
+				assignSubject()
+			}
+		} else {
+			fmt.Println("Student doesnt exist")
+			continue
+		}
+	}
+
+}
+
 func assignSubject() {
 	var Id int
 	var title string
@@ -63,22 +116,23 @@ func assignSubject() {
 		break
 	}
 
-	for _, value := range student_database {
-		index, err := strconv.Atoi(value.Id)
+	for index, value := range student_database {
+		oldValue, err := strconv.Atoi(value.Id)
 		if err != nil {
-			// Handle error
+			fmt.Println("Student doesnt exist")
 			return
 		}
-		if Id == index {
-
+		if Id == oldValue {
+			fmt.Println("Enter subject title")
 			fmt.Scanln(&title)
+			fmt.Println("Enter marks ")
 			fmt.Scanln(&mark)
 
 			newSubjects := Subject{
 				title: title,
 				mark:  mark,
 			}
-			student_database[Id].Subjects = append(student_database[Id].Subjects, newSubjects)
+			student_database[index].Subjects = append(student_database[index].Subjects, newSubjects)
 			break
 		}
 
